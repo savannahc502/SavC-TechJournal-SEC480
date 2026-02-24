@@ -15,7 +15,7 @@ $Type = Read-Host "Full or Linked Clone? 'F' for full clone or 'L' for linked cl
 $vm = Get-VM -Name $ClonedVM
 $snapshot = Get-Snapshot -vm $vm -Name "Base"
 $vmhost = Get-VMHost -Name "super-3.savannah.local"
-$ds = Get-Datastore -Name "datastore1"
+$ds = Get-Datastore -Name "datastore2"
 
 If ($Type -eq "F"){
         $linkedName = "{0}.linked" -f $vm.name
