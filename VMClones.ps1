@@ -23,10 +23,12 @@ If ($Type -eq "F"){
         $newvm = New-VM -Name $Name -VM $linkedvm -VMHost $vmhost -Datastore $ds
         $newvm | new-snapshot -Name "Base"
         $linkedvm | Remove-VM -Confirm:$false
+        Move-VM -VM $newvm -InventoryLocation (Get-Folder -Name "BASE VMs")
         }
 Elseif ($Type -eq "L"){
         $linkedvm = New-VM -LinkedClone -Name $Name -VM $vm -ReferenceSnapshot $snapshot -VMHost $vmhost -Datastore $ds
         $linkedvm | new-snapshot -Name "Base"
+        Move-VM -VM $linkedvm -InventoryLocation (Get-Folder -Name "LINKED VMs")
         }
 else {
         write-host "That selection does not exist. Please re-run the program. Program ending."
