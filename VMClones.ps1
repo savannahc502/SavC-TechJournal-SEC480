@@ -19,7 +19,7 @@ $ds = Get-Datastore -Name "datastore2"
 
 If ($Type -eq "F"){
         $linkedName = "{0}.linked" -f $vm.name
-        $linkedvm = New-VM -LinkedClone -Name $linkedName -VM $vm -ReferenceSnapshot $snapshot
+        $linkedvm = New-VM -LinkedClone -Name $linkedName -VM $vm -ReferenceSnapshot $snapshot -VMHost $vmhost -Datastore $ds
         $newvm = New-VM -Name $Name -VM $linkedvm -VMHost $vmhost -Datastore $ds
         $newvm | new-snapshot -Name "Base"
         $linkedvm | Remove-VM -Confirm:$false
