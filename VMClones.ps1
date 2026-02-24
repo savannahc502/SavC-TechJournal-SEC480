@@ -1,7 +1,7 @@
 # Author: Savannah Ciak
 # Date: 2/23/2026
 # Description: Creates a Linked or Full VM Clone
-# Consultants: Lily Pouliot 
+# Consultants: Lily Pouliot and Natlie Eckles 
 # Revision provided by Copilot with prompt "Make sure code is logical and would work as intended. Point out any flaws for correction."
 
 Write-Host ""
