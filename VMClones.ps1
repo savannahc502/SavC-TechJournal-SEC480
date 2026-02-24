@@ -25,7 +25,7 @@ If ($Type -eq "F"){
         $linkedvm | Remove-VM -Confirm:$false
         }
 Elseif ($Type -eq "L"){
-        $linkedvm = New-VM -LinkedClone -Name $Name -VM $vm -ReferenceSnapshot $snapshot
+        $linkedvm = New-VM -LinkedClone -Name $Name -VM $vm -ReferenceSnapshot $snapshot -VMHost $vmhost -Datastore $ds
         $linkedvm | new-snapshot -Name "Base"
         }
 else {
