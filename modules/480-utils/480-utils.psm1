@@ -16,13 +16,13 @@ function 480_connect([string] $server)
 
 function Get-480Config([string] $config_path)
 {
-    Write-Host "Reading the path" $config_path
+    Write-Host "Reading Configurations"
     $conf = $null
-    if(Test-Path $config_path){
+    if (Test-Path $config_path) {
         Write-Host -ForegroundColor Green "Configuration found."
-        $conf = (Get-Content -Raw -Path $config_path | ConnvertFrom-Json)
+        $conf = Get-Content -Raw -Path $config_path | ConvertFrom-Json
     }
-    else{
+    else {
         Write-Host -ForegroundColor Yellow "No configuration found."
     }
     return $conf
