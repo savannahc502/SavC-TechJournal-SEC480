@@ -8,6 +8,7 @@ function 480_connect([string] $server)
     $connect = $global:DefaultVIServer
     if ($connect){
         $msg = "Already connected to: {0}" -f $connect
+        Write-Host ""
         Write-Host -ForegroundColor Green $msg
     }else {
         $connect = Connect-VIServer -Server $server
@@ -16,6 +17,7 @@ function 480_connect([string] $server)
 
 function Get-480Config([string] $config_path)
 {
+    Write-Host ""
     Write-Host "Reading Configurations"
     $conf = $null
     if (Test-Path $config_path) {
@@ -37,19 +39,23 @@ function Select-VM([string] $folder)
         $index = 1
         foreach($vm in $vms)
         {
+            Write-Host ""
             Write-Host [$index] $vm.Name
             $index += 1
         }
         $pick_index = Read-Host "Which index number do you wish to pick?"
         if($pick_index -ge 1 -and $pick_index -le $vms.Count){
             $select_vm = $vms[$pick_index -1]
+            Write-Host ""
             Write-Host "You selected " $select_vm.Name -ForegroundColor "Green"
             return $select_vm
         }else{
+            Write-Host ""
             Write-Host "Invalid input. Try again." -ForegroundColor "Yellow"
         }
     }
     catch {
+        Write-Host ""
         Write-Host "Invalid Folder: $folder" -ForegroundColor "Red"
     }
 }
