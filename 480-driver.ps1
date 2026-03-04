@@ -9,4 +9,6 @@ $conf = Get-480Config -config_path "/home/savannah_loc/SavC-TechJournal-SEC480/4
 
 # List other Modules to Run. Comment out what's not needed
 # 480_banner
-Select-VM -folder "PROD"
+
+Write-Host "Now selecting a vm from the folder $working_folder"
+Select-VM -folder $working_folder

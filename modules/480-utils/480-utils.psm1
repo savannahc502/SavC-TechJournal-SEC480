@@ -43,7 +43,7 @@ function Select-VM([string] $folder)
         $pick_index = Read-Host "Which index number do you wish to pick?"
         if($pick_index -ge 1 -and $pick_index -le $vms.Count){
             $select_vm = $vms[$pick_index -1]
-            Write-Host "You selected " $select_vm.Name
+            Write-Host "You selected " $select_vm.Name -ForegroundColor "Green"
             return $select_vm
         }else{
             Write-Host "Invalid input. Try again." -ForegroundColor "Yellow"
