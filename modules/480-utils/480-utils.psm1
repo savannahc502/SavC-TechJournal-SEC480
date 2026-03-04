@@ -39,7 +39,6 @@ function Select-VM([string] $folder)
         $index = 1
         foreach($vm in $vms)
         {
-            Write-Host ""
             Write-Host [$index] $vm.Name
             $index += 1
         }
