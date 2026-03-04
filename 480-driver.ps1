@@ -7,8 +7,9 @@ $conf = Get-480Config -config_path "/home/savannah_loc/SavC-TechJournal-SEC480/4
 # Connecting to VCenter using the JSON value stored in vcenter_server
 480_connect -server $conf.vcenter_server
 
+# Select VM
+Write-Host "Now selecting a VM from the folder $($conf.working_folder)"
+Select-VM -folder $conf.working_folder
+
 # List other Modules to Run. Comment out what's not needed
 # 480_banner
-
-Write-Host "Now selecting a vm from the folder $working_folder"
-Select-VM -folder $working_folder
