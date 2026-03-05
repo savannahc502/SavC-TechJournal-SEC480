@@ -1,6 +1,6 @@
 {
     "vcenter_server": "vcenter.savannah.local",
-    "vm_host": "super-3.savannah.local",
+    "vm_host": "192.168.3.203",
     "datastore": "datastore2",
     "base_folder": "BASE VMs",
     "output_folder": "Test",
