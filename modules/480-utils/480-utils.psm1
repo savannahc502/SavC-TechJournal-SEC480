@@ -99,7 +99,7 @@ function New-480Clone([PSCustomObject]$conf)
     try { $ds = Get-Datastore -Name $Datastore -ErrorAction Stop }
     catch { Write-Host "Datastore '$Datastore' not found." -ForegroundColor Red; return }
 
-    # FULL CLONE WORKFLOW: A full clone must be created from a temporary linked clone.
+    # A full clone must be created from a temporary linked clone.
     if ($CloneType -eq "F") {
         Write-Host " "
         Write-Host "Creating temporary linked clone..." -ForegroundColor Cyan
@@ -130,7 +130,7 @@ function New-480Clone([PSCustomObject]$conf)
         return
     }
 
-    # LINKED CLONE WORKFLOW: Direct linked clone from base snapshot.
+    # Direct linked clone from base snapshot.
     if ($CloneType -eq "L") {
         Write-Host " "
         Write-Host "Creating linked clone '$CloneName'..." -ForegroundColor Cyan
