@@ -170,7 +170,7 @@ function Get-IP()
     Write-Host "Retrive IP and MAC Address from the first interface of a VM..." -ForegroundColor Blue
     
     # Get the VM name and check its existence
-    $vmName = Read-Host "Enter the name of the VM you wish to retrieve the information of" -ForegroundColor Blue
+    $vmName = Read-Host "Enter the name of the VM you wish to retrieve the information of"
     try {
         $vm = Get-VM -Name $vmName -ErrorAction Stop
     }
