@@ -1,6 +1,6 @@
 function 480_banner()
 {
-    Write-Host "Hello 480 Besties!"
+    Write-Host "Hello 480 Besties!" -ForegroundColor Magenta
 }
 
 function 480_connect([string] $server)
