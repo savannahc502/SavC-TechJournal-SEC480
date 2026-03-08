@@ -151,3 +151,10 @@ function New-480Clone([PSCustomObject]$conf)
     # Invalid clone type entered by the user.
     Write-Host "Invalid selection. Must be 'F' or 'L'." -ForegroundColor Red
 }
+
+function New-Network([string] $confpath){
+    $conf = Get-480Config -config_path $confPath 
+    $net_name = Read-Host "Enter the name for your new network"
+    New-VirtualSwitch -VMHost $conf.vm_host -Name $net_name
+    New-VirtualPortGroup -VirtualSwitch $net_name -Name $net_name
+}
