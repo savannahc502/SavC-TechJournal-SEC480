@@ -156,7 +156,7 @@ function New-480Clone([PSCustomObject]$conf)
 function New-Network([PSCustomObject] $conf){
     Write-Host ""
     Write-Host "Create a New Network..." -ForegroundColor Blue
-    $net_name = Read-Host "Enter the name for your new network" -ForegroundColor Blue
+    $net_name = Read-Host "Enter the name for your new network"
 
     $vmhost = Get-VMHost -Name $conf.vm_host
     $vSwitch = New-VirtualSwitch -VMHost $vmhost -Name $net_name
