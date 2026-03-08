@@ -64,6 +64,7 @@ function New-480Clone([PSCustomObject]$conf)
     # Select the source VM from the folder defined in JSON. 
     # Select-VM function lists VMs and lets the user pick by index number.
     Write-Host ""
+    Write-Host "Clone an existing VM from its base snapshot..." -ForegroundColor Blue
     Write-Host "Select the source VM to clone:" -ForegroundColor Blue
     $vm = Select-VM -folder $conf.working_folder
 
@@ -153,10 +154,55 @@ function New-480Clone([PSCustomObject]$conf)
 }
 
 function New-Network([PSCustomObject] $conf){
+    Write-Host ""
+    Write-Host "Create a New Network..."
     $net_name = Read-Host "Enter the name for your new network"
-    
+
     $vmhost = Get-VMHost -Name $conf.vm_host
 
     New-VirtualSwitch -VMHost $vmhost -Name $net_name
     New-VirtualPortGroup -VirtualSwitch $net_name -Name $net_name -VMHost $vmhost
+}
+
+function Get-IP()
+{
+    Write-Host ""
+    Write-Host "Retrive IP and MAC Address from the first interface of a VM..." -ForegroundColor Blue
+    
+    # Get the VM name and check its existence
+    $vmName = Read-Host "Enter the name of the VM you wish to retrieve the information of" -ForegroundColor Blue
+    try {
+        $vm = Get-VM -Name $vnName -ErrorAction Stop
+    }
+    catch {
+        Write-Host "VM $vmName not found. Try again." -ForegroundColor Red
+        return
+    }
+
+    # Get the first network adapter and check its existence
+    $adapter = $vm | Get-NetworkAdapter | Select-Object -First 1
+    if (-not $adapter){
+        Write-Host "No network adapters found on the VM." -ForegroundColor Yellow
+        return
+    }
+
+    # Get the MAC and IP
+    $mac = $adapter.MacAddress
+    $ip = $vm.Guest.IPAddress
+
+    # If there's multiple IPs, select the first
+    if ($ip -is [array]){
+        $ip = $ip[0]
+    }
+
+    # If there's no IP, tell the user 
+    if (-not $ip){
+        Write-Host "No IP addresses found" -ForegroundColor Yellow
+    }
+
+    # Final information
+    Write-Host ""
+    Write-Host "VM Name: $vmName" -ForegroundColor Green
+    Write-Host "Mac Address: $mac" -ForegroundColor Green
+    Write-Host "IP Address: $ip" -ForegroundColor Green
 }
