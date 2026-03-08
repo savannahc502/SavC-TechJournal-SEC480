@@ -172,7 +172,7 @@ function Get-IP()
     # Get the VM name and check its existence
     $vmName = Read-Host "Enter the name of the VM you wish to retrieve the information of" -ForegroundColor Blue
     try {
-        $vm = Get-VM -Name $vnName -ErrorAction Stop
+        $vm = Get-VM -Name $vmName -ErrorAction Stop
     }
     catch {
         Write-Host "VM $vmName not found. Try again." -ForegroundColor Red
