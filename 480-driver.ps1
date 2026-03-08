@@ -12,7 +12,10 @@ $conf = Get-480Config -config_path "/home/savannah_loc/SavC-TechJournal-SEC480/4
 #Write-Host "Now selecting a VM from the folder $($conf.working_folder)"
 #Select-VM -folder $conf.working_folder
 
-New-480Clone -conf $conf
+#Create a New VM
+#New-480Clone -conf $conf
+
+New-Network -conf $conf
 
 # List other Modules to Run. Comment out what's not needed
 # 480_banner
