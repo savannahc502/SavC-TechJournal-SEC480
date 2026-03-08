@@ -158,11 +158,31 @@ function New-Network([PSCustomObject] $conf){
     Write-Host "Create a New Network..." -ForegroundColor Blue
     $net_name = Read-Host "Enter the name for your new network"
 
+    # Get ESXi IP
     $vmhost = Get-VMHost -Name $conf.vm_host
-    $vSwitch = New-VirtualSwitch -VMHost $vmhost -Name $net_name
 
+    # Check if Network Name already exists
+    $existingSwitch = Get-VirtualSwitch -VMHost $vmhost -Name $net_name -ErrorAction SilentlyContinue
+    if ($existingSwitch) {
+        Write-Host "A vSwitch named '$net_name' already exists on host $($conf.vm_host)." -ForegroundColor Yellow
+        Write-Host "Exiting without making changes."
+        return
+    }
+
+    # Check if Port Group already exists
+    $existingPG = Get-VirtualPortGroup -VMHost $vmhost -Name $net_name -ErrorAction SilentlyContinue
+    if ($existingPG) {
+        Write-Host "A Port Group named '$net_name' already exists on host $($conf.vm_host)." -ForegroundColor Yellow
+        Write-Host "Exiting without making changes."
+        return
+    }
+
+    # Create the network and port group 
+    $vSwitch = New-VirtualSwitch -VMHost $vmhost -Name $net_name
     New-VirtualPortGroup -VirtualSwitch $vSwitch -Name $net_name
+    Write-Host "Network '$net_name' created successfully." -ForegroundColor Green
 }
+
 
 function Get-IP()
 {
