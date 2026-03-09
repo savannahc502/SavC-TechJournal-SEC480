@@ -259,8 +259,6 @@ function Get-IP()
 }
 
 function StartStop-Box(){
-    Write-Host "Start or Stop a VM..." -ForegroundColor Cyan
-
     # Select VM
     $box = Select-VM
     if (-not $box){
