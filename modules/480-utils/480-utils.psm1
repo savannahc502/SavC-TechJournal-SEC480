@@ -97,7 +97,6 @@ function New-480Clone([PSCustomObject]$conf)
     # Select-VM function lists VMs and lets the user pick by index number.
     Write-Host ""
     Write-Host "Clone an existing VM from its base snapshot..." -ForegroundColor Blue
-    Write-Host "Select the source VM to clone:" -ForegroundColor Blue
     $vm = Select-VM -folder $conf.working_folder
 
     # Stop if no VM was selected
