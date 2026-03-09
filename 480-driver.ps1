@@ -23,7 +23,7 @@ while ($true) {
     Write-Host "5) Exit"
     Write-Host ""
 
-    $choice = Read-Host "Enter your choice (1-4)"
+    $choice = Read-Host "Enter your choice"
 
     switch ($choice) {
         "1" {

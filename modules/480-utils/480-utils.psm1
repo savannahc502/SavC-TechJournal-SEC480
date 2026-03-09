@@ -274,7 +274,7 @@ function StartStop-Box(){
     $option = Read-Host "Choose Start or Stop (1-2)"
 
     # Start or Stop or Invalid
-    switch ($action){
+    switch ($option){
         "1" {
             Write-Host "Starting VM..." -ForegroundColor Cyan
             Start-VM -VM $box -Confirm:$false
