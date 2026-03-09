@@ -226,3 +226,4 @@ function Get-IP()
     Write-Host "Mac Address: $mac" -ForegroundColor Green
     Write-Host "IP Address: $ip" -ForegroundColor Green
 }
+

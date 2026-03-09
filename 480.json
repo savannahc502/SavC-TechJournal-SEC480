@@ -3,7 +3,7 @@
     "vm_host": "192.168.3.203",
     "datastore": "datastore2",
     "base_folder": "BASE VMs",
-    "output_folder": "Test",
+    "output_folder": "BlueX",
     "snapshot": "base",
     "default_network": "480-internal",
     "working_folder": "PROD"
