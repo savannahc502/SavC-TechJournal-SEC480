@@ -328,7 +328,6 @@ function Set-Network() {
         $selected_net = $networks[$index_selected - 1].Name
         Write-Host "Setting adapter to network: $selected_net" -ForegroundColor Cyan
         $adapter | Set-NetworkAdapter -NetworkName $selected_net -StartConnected:$true -Confirm:$false
-        continue
     }
     Write-Host "Network configuration complete." -ForegroundColor Green
 }
