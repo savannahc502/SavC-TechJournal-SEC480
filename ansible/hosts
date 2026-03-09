@@ -1,0 +1,2 @@
+[blue]
+blueX-fw ansible_host=10.0.17.102 ansible_user=vyos ansible_python_interpreter=/bin/vbash
