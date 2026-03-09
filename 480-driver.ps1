@@ -16,7 +16,7 @@ $conf = Get-480Config -config_path "/home/savannah_loc/SavC-TechJournal-SEC480/4
 # Select-VM -folder $conf.output_folder
 
 # // Create a New VM //
-# New-480Clone -conf $conf
+New-480Clone -conf $conf
 
 # // Create a new Network //
 # New-Network -conf $conf
