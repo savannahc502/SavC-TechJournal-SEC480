@@ -1,4 +1,5 @@
 # // Load VMware PowerCLI and Module //
+Write-Host "Importing PowerCLI and 480-utils Modules" -ForegroundColor Magenta
 Import-Module VMware.PowerCLI
 Import-Module '480-utils' -Force 
 
@@ -14,7 +15,7 @@ $conf = Get-480Config -config_path "/home/savannah_loc/SavC-TechJournal-SEC480/4
 # // 480 Main Menu //
 while ($true) {
     Write-Host ""
-    Write-Host "          480 MENU            " -ForegroundColor Cyan
+    Write-Host "          480 MENU            " -ForegroundColor Magenta
     Write-Host "1) Create a New Network"
     Write-Host "2) Clone a VM"
     Write-Host "3) Get the IP and MAC of a VM"
@@ -26,22 +27,22 @@ while ($true) {
     switch ($choice) {
         "1" {
             Write-Host ""
-            Write-Host "// Create a New Network //" -ForegroundColor Yellow
+            Write-Host "Create a New Network" -ForegroundColor Magenta
             New-Network -conf $conf
         }
         "2" {
             Write-Host ""
-            Write-Host "// Create a New VM //" -ForegroundColor Yellow
+            Write-Host "Create a New VM" -ForegroundColor Magenta
             New-480Clone -conf $conf
         }
         "3" {
             Write-Host ""
-            Write-Host "// Get the IP and MAC of a VM //" -ForegroundColor Yellow
+            Write-Host "Get the IP and MAC of a VM" -ForegroundColor Magenta
             Get-IP
         }
         "4" {
             Write-Host ""
-            Write-Host "// Exiting Program //" -ForegroundColor Green
+            Write-Host "Exiting Program" -ForegroundColor Magenta
             break
         }
 
