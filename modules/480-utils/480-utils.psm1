@@ -258,3 +258,35 @@ function Get-IP()
     Write-Host "IP Address: $ip" -ForegroundColor Green
 }
 
+function StartStop-Box(){
+    Write-Host "Start or Stop a VM..." -ForegroundColor Cyan
+
+    # Select VM
+    $box = Select-VM
+    if (-not $box){
+        Write-Host "No VM selected." -ForegroundColor Yellow
+    }
+    
+    # Select a stop or start option
+    Write-Host "The selected VM is $($box.Name)" -ForegroundColor Green
+    Write-Host "1) Start VM"
+    Write-Host "2) Stop VM"
+    $option = Read-Host "Choose Start or Stop (1-2)"
+
+    # Start or Stop or Invalid
+    switch ($action){
+        "1" {
+            Write-Host "Starting VM..." -ForegroundColor Cyan
+            Start-VM -VM $box -Confirm:$false
+            Write-Host "VM started." -ForegroundColor Green
+        }
+        "2" {
+            Write-Host "Stopping VM..." -ForegroundColor Cyan
+            Stop-VM -VM $box -Confirm:$false
+            Write-Host "VM stopped." -ForegroundColor Green
+        }
+        default {
+            Write-Host "Invalid." -ForegroundColor Red
+        }
+    }
+}
