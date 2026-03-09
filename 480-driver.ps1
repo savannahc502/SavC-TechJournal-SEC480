@@ -20,7 +20,8 @@ while ($true) {
     Write-Host "2) Clone a VM"
     Write-Host "3) Get the IP and MAC of a VM"
     Write-Host "4) Start or Stop VM"
-    Write-Host "5) Exit"
+    Write-Host "5) Set a Network Adapter"
+    Write-Host "6) Exit"
     Write-Host ""
 
     $choice = Read-Host "Enter your choice"
@@ -28,25 +29,30 @@ while ($true) {
     switch ($choice) {
         "1" {
             Write-Host ""
-            Write-Host "Create a New Network" -ForegroundColor Magenta
+            Write-Host "Create a New Network..." -ForegroundColor Magenta
             New-Network -conf $conf
         }
         "2" {
             Write-Host ""
-            Write-Host "Create a New VM" -ForegroundColor Magenta
+            Write-Host "Create a New VM..." -ForegroundColor Magenta
             New-480Clone -conf $conf
         }
         "3" {
             Write-Host ""
-            Write-Host "Get the IP and MAC of a VM" -ForegroundColor Magenta
+            Write-Host "Get the IP and MAC of a VM..." -ForegroundColor Magenta
             Get-IP
         }
         "4" {
             Write-Host ""
-            Write-Host "Start or Stop a VM" -ForegroundColor Magenta
+            Write-Host "Start or Stop a VM..." -ForegroundColor Magenta
             StartStop-Box
         }
         "5" {
+            Write-Host ""
+            Write-Host "Set a network adapter..." -ForegroundColor Magenta
+            Set-Network
+        }
+        "6" {
             Write-Host ""
             Write-Host "Exiting Program" -ForegroundColor Magenta
             exit
