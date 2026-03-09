@@ -43,7 +43,7 @@ while ($true) {
         "4" {
             Write-Host ""
             Write-Host "Exiting Program" -ForegroundColor Magenta
-            break
+            exit
         }
 
         default {
