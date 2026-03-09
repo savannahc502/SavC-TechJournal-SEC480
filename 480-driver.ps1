@@ -42,6 +42,11 @@ while ($true) {
         }
         "4" {
             Write-Host ""
+            Write-Host "Start or Stop a VM" -ForegroundColor Magenta
+            StartStop-Box
+        }
+        "5" {
+            Write-Host ""
             Write-Host "Exiting Program" -ForegroundColor Magenta
             exit
         }
