@@ -288,3 +288,46 @@ function StartStop-Box(){
         }
     }
 }
+
+function Set-Network() {
+    # Select
+    $selected_vm = Select-VM
+    if (-not $selected_vm) {
+        Write-Host "No VM selected." -ForegroundColor Yellow
+        return
+    }
+    
+    # Get VM host and adapters and port groups
+    $vmhost = $selected_vm.VMHost
+    $all_adapters = Get-NetworkAdapter -VM $selected_vm
+    $networks = Get-VirtualPortGroup -VMHost $vmhost
+    
+    # Display networks
+    Write-Host "Available Networks:" -ForegroundColor Cyan
+    $net_index = 1
+    foreach ($network in $networks) {
+        Write-Host "[$net_index] $($network.Name)"
+        $net_index++
+    }
+    # Loop through each adapter
+    :adapterLoop foreach ($adapter in $all_adapters) {
+        Write-Host "Configuring Adapter: $($adapter.Name)" -ForegroundColor Yellow
+        Write-Host "0 or [Enter] = Leave disconnected."
+        $index_selected = Read-Host "Choose network index (0-$($networks.Count))"
+        # Skip 
+        if ($index_selected -eq "" -or $index_selected -eq 0) {
+            Write-Host "Skipping adapter..." -ForegroundColor Yellow
+            continue adapterLoop
+        }
+        # Validate 
+        if ($index_selected -lt 1 -or $index_selected -gt $networks.Count) {
+            Write-Host "Selection out of range." -ForegroundColor Red
+            continue adapterLoop
+        }
+        # Apply 
+        $selected_net = $networks[$index_selected - 1].Name
+        Write-Host "Setting adapter to network: $selected_net" -ForegroundColor Cyan
+        $adapter | Set-NetworkAdapter -NetworkName $selected_net -StartConnected:$true -Confirm:$false
+    }
+    Write-Host "Network configuration complete." -ForegroundColor Green
+}
