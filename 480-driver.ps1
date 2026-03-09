@@ -19,7 +19,8 @@ while ($true) {
     Write-Host "1) Create a New Network"
     Write-Host "2) Clone a VM"
     Write-Host "3) Get the IP and MAC of a VM"
-    Write-Host "4) Exit"
+    Write-Host "4) Start or Stop VM"
+    Write-Host "5) Exit"
     Write-Host ""
 
     $choice = Read-Host "Enter your choice (1-4)"
