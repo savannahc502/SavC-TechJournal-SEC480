@@ -18,7 +18,7 @@ function 480_connect([string] $server)
 function Get-480Config([string] $config_path)
 {
     Write-Host ""
-    Write-Host "Reading Configurations"
+    Write-Host "Reading Configurations" -ForegroundColor Blue
     $conf = $null
     if (Test-Path $config_path) {
         Write-Host -ForegroundColor Green "Configuration found."
@@ -30,33 +30,65 @@ function Get-480Config([string] $config_path)
     return $conf
 }
 
-function Select-VM([string] $folder)
+function Select-VM()
 {
-    $select_vm = $null
-    try
-    {
-        $vms = Get-VM -Location $folder
-        $index = 1
-        foreach($vm in $vms)
-        {
-            Write-Host [$index] $vm.Name
-            $index += 1
-        }
-        $pick_index = Read-Host "Which index number do you wish to pick?"
-        if($pick_index -ge 1 -and $pick_index -le $vms.Count){
-            $select_vm = $vms[$pick_index -1]
-            Write-Host ""
-            Write-Host "You selected " $select_vm.Name -ForegroundColor "Green"
-            return $select_vm
-        }else{
-            Write-Host ""
-            Write-Host "Invalid input. Try again." -ForegroundColor "Yellow"
-        }
+    Write-Host ""
+    Write-Host "Browse and Select a VM" -ForegroundColor Blue
+    
+    # Get all folders
+    $folders = Get-Folder | Where-Object { $_.Type -eq "VM" }
+    if (-not $folders) {
+        Write-Host "No VM folders found." -ForegroundColor Red
+        return
     }
-    catch {
-        Write-Host ""
-        Write-Host "Invalid Folder: $folder" -ForegroundColor "Red"
+
+    # Display folders
+    Write-Host ""
+    Write-Host "Available VM Folders:" -ForegroundColor Blue
+    $index = 1
+    foreach ($f in $folders) {
+        Write-Host "[$index] $($f.Name)"
+        $index++
     }
+
+    # Pick Folder
+    $folderChoice = Read-Host "Select a folder by number"
+    if ($folderChoice -lt 1 -or $folderChoice -gt $folders.Count) {
+        Write-Host "Invalid selection." -ForegroundColor Red
+        return
+    }
+
+    $selectedFolder = $folders[$folderChoice - 1]
+    Write-Host ""
+    Write-Host "You selected folder: $($selectedFolder.Name)" -ForegroundColor Green
+
+    # Get VMs inside the selected folder
+    $vms = Get-VM -Location $selectedFolder
+    if (-not $vms) {
+        Write-Host "No VMs found in this folder." -ForegroundColor Red
+        return
+    }
+
+    # Display VMs
+    Write-Host ""
+    Write-Host "Available VMs:" -ForegroundColor Cyan
+    $vmIndex = 1
+    foreach ($vm in $vms) {
+        Write-Host "[$vmIndex] $($vm.Name)"
+        $vmIndex++
+    }
+
+    # Pick a VM
+    $vmChoice = Read-Host "Select a VM by number"
+    if ($vmChoice -lt 1 -or $vmChoice -gt $vms.Count) {
+        Write-Host "Invalid VM selection." -ForegroundColor Red
+        return
+    }
+
+    $selectedVM = $vms[$vmChoice - 1]
+    Write-Host ""
+    Write-Host "You selected VM: $($selectedVM.Name)" -ForegroundColor Green
+    return $selectedVM
 }
 
 function New-480Clone([PSCustomObject]$conf)
