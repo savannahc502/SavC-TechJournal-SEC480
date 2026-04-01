@@ -37,6 +37,10 @@
     #- name: Save configuration
     #  become: yes
     #  command: /opt/vyatta/sbin/vyatta-cfg-cmd-wrapper save
+
+    - name: Save configuration
+      vyos_config:
+         save: yes
         
     - name: End
       become: yes
