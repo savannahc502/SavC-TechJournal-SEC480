@@ -20,7 +20,7 @@
     - name: Load vyos template with missing variables
       become: yes
       template:
-        src: ansible/vyos/config.boot.j2
+        src: config.boot.j2
         dest: /config/config.boot
         mode: "0775"
         owner: root
