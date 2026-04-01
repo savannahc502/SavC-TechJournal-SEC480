@@ -26,17 +26,17 @@
         owner: root
         group: vyattacfg
   
-    - name: Enter configuration mode
-      become: yes
-      command: /opt/vyatta/sbin/vyatta-cfg-cmd-wrapper begin
+    #- name: Enter configuration mode
+    #  become: yes
+    #  command: /opt/vyatta/sbin/vyatta-cfg-cmd-wrapper begin
 
-    - name: Commit configuration
-      become: yes
-      command: /opt/vyatta/sbin/vyatta-cfg-cmd-wrapper commit
+    #- name: Commit configuration
+    #  become: yes
+    #  command: /opt/vyatta/sbin/vyatta-cfg-cmd-wrapper commit
 
-    - name: Save configuration
-      become: yes
-      command: /opt/vyatta/sbin/vyatta-cfg-cmd-wrapper save
+    #- name: Save configuration
+    #  become: yes
+    #  command: /opt/vyatta/sbin/vyatta-cfg-cmd-wrapper save
         
     - name: End
       become: yes
