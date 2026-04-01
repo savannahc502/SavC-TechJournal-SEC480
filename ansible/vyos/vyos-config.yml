@@ -25,6 +25,10 @@
         mode: "0775"
         owner: root
         group: vyattacfg
+  
+    - name: Enter configuration mode
+      become: yes
+      command: /opt/vyatta/sbin/vyatta-cfg-cmd-wrapper begin
 
     - name: Commit configuration
       become: yes
