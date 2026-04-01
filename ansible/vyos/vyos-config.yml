@@ -1,1 +1,39 @@
+# Savannah Ciak
+# 1 April 2026
+# Playbook Purpose: Completes the initial configuration for purplex-fw. 
+# Dependencies: A connection to the purplex-fw firewall via a management host,
+# > and config.boot.j2 file to point at,
+# > and a text file that stores the specific configurations. 
 
+- name: vyos basic configurations
+  hosts: vyos
+  vars_prompt:
+    - name: password
+      prompt: Enter the new password you would like for the VM
+      private: true
+
+  tasks: 
+    - name: Set password and hash it
+      set_fact:
+        password_hash: "{{ password | password_hash('sha512') }}"
+        
+    - name: Load vyos template with missing variables
+      become: yes
+      template:
+        src: ansible/vyos/config.boot.j2
+        dest: /config/config.boot
+        mode: "0775"
+        owner: root
+        group: vyattacfg
+
+    - name: Commit configuration
+      become: yes
+      command: /opt/vyatta/sbin/vyatta-cfg-cmd-wrapper commit
+
+    - name: Save configuration
+      become: yes
+      command: /opt/vyatta/sbin/vyatta-cfg-cmd-wrapper save
+        
+    - name: End
+      become: yes
+      shell: nohup bash -c "/usr/bin/sleep 5 && /usr/sbin/shutdown -r now" &
