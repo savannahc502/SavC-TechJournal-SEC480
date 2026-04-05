@@ -162,26 +162,27 @@ function New-480Clone([PSCustomObject]$conf)
         return
     }
 
-    # Direct linked clone from base snapshot.
     if ($CloneType -eq "L") {
-        Write-Host " "
-        Write-Host "Creating linked clone '$CloneName'..." -ForegroundColor Cyan
-
-        # Create linked clone directly from base snapshot.
-        $linkedvm = New-VM -LinkedClone -Name $CloneName -VM $vm -ReferenceSnapshot $snapshot -VMHost $vmhost -Datastore $ds
-
-        # Apply network settings.
-        $linkedvm | Get-NetworkAdapter | Set-NetworkAdapter -NetworkName $NetworkName -Confirm:$false
-
-        # Move linked clone into output folder.
-        Move-VM -VM $linkedvm -InventoryLocation (Get-Folder -Name $OutputFolder)
-
-        Write-Host "Linked clone '$CloneName' created successfully." -ForegroundColor Green
+    # Ask how many linked clones to create
+    $count = Read-Host "How many linked clones would you like to create?"
+    if (-not ($count -as [int]) -or $count -lt 1) {
+        Write-Host "Invalid number entered. Must be a positive integer." -ForegroundColor Red
         return
     }
 
-    # Invalid clone type entered by the user.
-    Write-Host "Invalid selection. Must be 'F' or 'L'." -ForegroundColor Red
+    # Loop to create the requested number of clones
+    for ($i = 1; $i -le $count; $i++) {
+        $NewName = "{0}-{1}" -f $CloneName, $i
+        Write-Host "Creating linked clone '$NewName'..." -ForegroundColor Cyan
+        # Create linked clone
+        $linkedvm = New-VM -LinkedClone -Name $NewName -VM $vm -ReferenceSnapshot $snapshot -VMHost $vmhost -Datastore $ds
+        # Apply network settings
+        $linkedvm | Get-NetworkAdapter | Set-NetworkAdapter -NetworkName $NetworkName -Confirm:$false
+        # Move to output folder
+        Move-VM -VM $linkedvm -InventoryLocation (Get-Folder -Name $OutputFolder)
+        Write-Host "Linked clone '$NewName' created successfully." -ForegroundColor Green
+    }
+    return
 }
 
 function New-Network([PSCustomObject] $conf){
