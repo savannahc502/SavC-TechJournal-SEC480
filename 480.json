@@ -1,7 +1,7 @@
 {
     "vcenter_server": "vcenter.lily.local",
     "vm_host": "192.168.3.225",
-    "datastore": "datastore2",
+    "datastore": "datastore1",
     "base_folder": "BASE-VMs",
     "output_folder": "BLUE1",
     "snapshot": "Base",
