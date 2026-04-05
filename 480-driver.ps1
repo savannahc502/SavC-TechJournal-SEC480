@@ -4,7 +4,7 @@ Import-Module VMware.PowerCLI
 Import-Module '480-utils' -Force 
 
 # // Load Configurations from JSON File. Get-480Config is stored in 480-utils.psm1 //
-$conf = Get-480Config -config_path "/home/savannah_loc/SavC-TechJournal-SEC480/480.json"
+$conf = Get-480Config -config_path "/home/admin/SavC-TechJournal-SEC480/480.json"
 
 # // Banner //
 480_banner
