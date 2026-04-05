@@ -1,10 +1,10 @@
 {
-    "vcenter_server": "vcenter.savannah.local",
-    "vm_host": "192.168.3.203",
+    "vcenter_server": "vcenter.lily.local",
+    "vm_host": "192.168.3.225",
     "datastore": "datastore2",
-    "base_folder": "BASE VMs",
+    "base_folder": "BASE-VMs",
     "output_folder": "BlueX",
-    "snapshot": "base",
+    "snapshot": "Base",
     "default_network": "480-internal",
     "working_folder": "PROD"
 }
