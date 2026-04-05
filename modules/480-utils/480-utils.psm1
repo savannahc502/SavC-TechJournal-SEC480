@@ -184,6 +184,7 @@ function New-480Clone([PSCustomObject]$conf)
     }
     return
 }
+}
 
 function New-Network([PSCustomObject] $conf){
     Write-Host ""
