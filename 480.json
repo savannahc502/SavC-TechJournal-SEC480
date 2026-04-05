@@ -5,6 +5,6 @@
     "base_folder": "BASE-VMs",
     "output_folder": "BLUE1",
     "snapshot": "Base",
-    "default_network": "480-internal",
+    "default_network": "bluex-port",
     "working_folder": "PROD"
 }
