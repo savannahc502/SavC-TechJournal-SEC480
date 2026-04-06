@@ -1,7 +1,7 @@
 all:
   hosts:
     ubuntu1:
-      ansible_host: 10.0.5.80
+      ansible_host: 10.0.5.81
       hostname: ubuntu1
       lan_ip: 10.0.5.30
 
