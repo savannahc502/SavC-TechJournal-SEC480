@@ -3,7 +3,7 @@
   become: yes
   tasks:
 
-  - name: Check .ssh directory exists
+  - name: .ssh directory exists
     file:
       path: "/home/{{ ansible_user }}/.ssh"
       state: directory
@@ -11,7 +11,7 @@
       owner: "{{ ansible_user }}"
       group: "{{ ansible_user }}"
 
-  - name: Check authorized_keys exists
+  - name: authorized_keys exists
     file:
       path: "/home/{{ ansible_user }}/.ssh/authorized_keys"
       state: touch
@@ -19,41 +19,41 @@
       owner: "{{ ansible_user }}"
       group: "{{ ansible_user }}"
 
-  - name: Add public key
+  - name: Add admin public key
     blockinfile:
       dest: "/home/{{ ansible_user }}/.ssh/authorized_keys"
-      block: "{{ public_key }}"
+      block: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
       owner: "{{ ansible_user }}"
       group: "{{ ansible_user }}"
       mode: 0644
 
-  - name: Sudo group check
+  - name: sudo group
     user:
       name: "{{ ansible_user }}"
       groups: sudo
       append: yes
 
-  - name: Allow passwordless sudo for admin
+  - name: passwordless sudo for admin
     copy:
       dest: /etc/sudoers.d/admin
       content: "admin ALL=(ALL) NOPASSWD:ALL\n"
       mode: 0440
 
-  - name: Set hostname
+  - name: hostname
     hostname:
       name: "{{ hostname }}"
 
-  - name: Add hostname to /etc/hosts
+  - name: add hostname to /etc/hosts
     lineinfile:
       path: /etc/hosts
       line: "127.0.1.1 {{ hostname }}"
 
-  - name: Remove default netplan file
+  - name: remove default netplan file
     file:
       path: "/etc/netplan/00-installer-config.yaml"
       state: absent
 
-  - name: Create new netplan config
+  - name: create new netplan config
     copy:
       dest: "/etc/netplan/01-netcfg.yaml"
       mode: 0600
