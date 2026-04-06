@@ -1,19 +1,18 @@
 all:
+  hosts:
+    ubuntu1:
+      ansible_host: 10.0.5.80
+      hostname: ubuntu1
+      lan_ip: 10.0.5.30
+
+    ubuntu2:
+      ansible_host: 10.0.5.78
+      hostname: ubuntu2
+      lan_ip: 10.0.5.31
+
   vars:
     ansible_user: admin
-    ansible_ssh_private_key_file: ~/.ssh/id_rsa
     gateway: 10.0.5.2
-    netmask: 255.255.255.0
-
-  children:
-    ubuntu:
-      hosts:
-        ubuntu-1:
-          ansible_host: 10.0.5.80
-          new_ip: 10.0.5.30
-          hostname: ubuntu-1
-
-        ubuntu-2:
-          ansible_host: 10.0.5.78
-          new_ip: 10.0.5.31
-          hostname: ubuntu-2
+    name_server: 10.0.5.5
+    device: ens34
+    public_key: 
