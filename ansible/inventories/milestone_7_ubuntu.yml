@@ -15,4 +15,3 @@ all:
     gateway: 10.0.5.2
     name_server: 10.0.5.5
     device: ens34
-    public_key: 
