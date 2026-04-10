@@ -1,0 +1,47 @@
+- name: Install Wazuh All-In-One Server on Rocky
+  hosts: wazuh_server
+  become: yes
+
+  tasks:
+    - name: Install required packages
+      ansible.builtin.dnf:
+        name:
+          - curl
+          - gnupg2
+          - policycoreutils-python-utils
+        state: present
+
+    - name: Add Wazuh GPG key
+      ansible.builtin.rpm_key:
+        state: present
+        key: https://packages.wazuh.com/key/GPG-KEY-WAZUH
+
+    - name: Add Wazuh repository
+      ansible.builtin.copy:
+        dest: /etc/yum.repos.d/wazuh.repo
+        content: |
+          [wazuh]
+          gpgcheck=1
+          gpgkey=https://packages.wazuh.com/key/GPG-KEY-WAZUH
+          enabled=1
+          name=Wazuh repository
+          baseurl=https://packages.wazuh.com/4.x/yum/
+          protect=1
+
+    - name: Install Wazuh Manager, Indexer, and Dashboard
+      ansible.builtin.dnf:
+        name:
+          - wazuh-manager
+          - wazuh-indexer
+          - wazuh-dashboard
+        state: present
+
+    - name: Enable and start Wazuh services
+      ansible.builtin.service:
+        name: "{{ item }}"
+        state: started
+        enabled: yes
+      loop:
+        - wazuh-manager
+        - wazuh-indexer
+        - wazuh-dashboard
