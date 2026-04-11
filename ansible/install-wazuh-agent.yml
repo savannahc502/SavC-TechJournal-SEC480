@@ -3,7 +3,7 @@
   become: yes
 
   vars:
-    wazuh_manager_ip: "10.0.5.10" 
+    wazuh_manager_ip: "10.0.5.84" 
 
   tasks:
     - name: Install required packages
