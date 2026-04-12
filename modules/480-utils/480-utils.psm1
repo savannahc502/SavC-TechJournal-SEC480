@@ -333,3 +333,37 @@ function Set-Network() {
     }
     Write-Host "Network configuration complete." -ForegroundColor Green
 }
+
+function Set-WindowsIP {
+    Write-Host "Select the VM to set a static IP on" -ForegroundColor Cyan
+    $vm = Select-VM
+
+    if (-not $vm) {
+        Write-Host "No VM selected." -ForegroundColor Red
+        return
+    }
+
+    $user = Read-Host "Enter the Windows username"
+    $pass = Read-Host "Enter the password for $user" -AsSecureString
+
+    # convert secure password
+    $plain = [System.Net.NetworkCredential]::new("", $pass).Password
+
+    # hard-coded for blue1 dc
+    $cmd = @"
+netsh interface ip set address "Ethernet0" static 10.0.5.5 255.255.255.0 10.0.5.2 1
+netsh interface ip set dnsservers "Ethernet0" static 10.0.5.2
+ipconfig /all
+"@
+
+    Write-Host "Applying static IP settings..." -ForegroundColor Yellow
+
+    $result = Invoke-VMScript -VM $vm `
+        -ScriptText $cmd `
+        -GuestUser $user `
+        -GuestPassword $plain `
+        -ScriptType bat
+
+    Write-Host $result.ScriptOutput
+    Write-Host "Static IP set successfully." -ForegroundColor Green
+}
