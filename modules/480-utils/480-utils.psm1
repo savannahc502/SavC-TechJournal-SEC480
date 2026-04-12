@@ -351,8 +351,8 @@ function Set-WindowsIP {
 
     # hard-coded for blue1 dc
     $cmd = @"
-netsh interface ip set address "Ethernet0" static 10.0.5.5 255.255.255.0 10.0.5.2 1
-netsh interface ip set dnsservers "Ethernet0" static 10.0.5.2
+netsh interface ip set address "Ethernet1" static 10.0.5.5 255.255.255.0 10.0.5.2 1
+netsh interface ip set dnsservers "Ethernet1" static 10.0.5.2
 ipconfig /all
 "@
 
