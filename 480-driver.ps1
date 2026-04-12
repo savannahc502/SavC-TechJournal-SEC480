@@ -22,6 +22,7 @@ while ($true) {
     Write-Host "4) Start or Stop VM"
     Write-Host "5) Set a Network Adapter"
     Write-Host "6) Exit"
+    Write-Host "7) Set Windows Static IP"
     Write-Host ""
 
     $choice = Read-Host "Enter your choice"
@@ -56,6 +57,12 @@ while ($true) {
             Write-Host ""
             Write-Host "Exiting Program" -ForegroundColor Magenta
             exit
+        }
+
+        "7" {
+            Write-Host ""
+            Write-Host "Set a Windows IP..." - ForegroundColor Magenta
+            Set-WindowsIP
         }
 
         default {
