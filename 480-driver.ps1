@@ -61,7 +61,7 @@ while ($true) {
 
         "7" {
             Write-Host ""
-            Write-Host "Set a Windows IP..." - ForegroundColor Magenta
+            Write-Host "Set a Windows IP..." -ForegroundColor Magenta
             Set-WindowsIP
         }
 
