@@ -6,5 +6,5 @@ all:
           ansible_host: 10.0.5.5
           ansible_user: deployer
           ansible_connection: winrm
-          ansible_winrm_transport: credssp
+          ansible_winrm_transport: basic
           ansible_winrm_server_cert_validation: ignore
