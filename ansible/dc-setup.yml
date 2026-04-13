@@ -23,7 +23,7 @@
       when: hostname_change.reboot_required
 
     - name: new forest
-      ansible.windows.win_domain:
+      microsoft.ad.domain:
         dns_domain_name: "{{ domain }}"
         safe_mode_password: "{{ password }}"
       register: domain_install
