@@ -20,7 +20,7 @@
         mode: '0755'
 
     - name: Run Wazuh pre-install (auto mode)
-      command: bash /tmp/wazuh-install.sh -a
+      command: bash /tmp/wazuh-install.sh -a --ignore-checks
 
     - name: Run full Wazuh install (indexer + manager + dashboard)
-      command: bash /tmp/wazuh-install.sh -i -o -a
+      command: bash /tmp/wazuh-install.sh -i -o -a --ignore-checks
