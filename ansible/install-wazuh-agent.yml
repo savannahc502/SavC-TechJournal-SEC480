@@ -3,7 +3,7 @@
   become: yes
 
   vars:
-    wazuh_manager_ip: "10.0.5.31"
+    wazuh_manager_ip: "10.0.5.87"
     wazuh_agent_group: "linux"
 
   tasks:
