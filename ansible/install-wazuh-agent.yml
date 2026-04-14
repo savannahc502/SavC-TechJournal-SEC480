@@ -1,0 +1,58 @@
+- name: Install Wazuh Agent on Linux
+  hosts: wazuh_agents
+  become: yes
+
+  vars:
+    wazuh_manager_ip: "10.0.5.31"
+    wazuh_agent_group: "linux"
+
+  tasks:
+    - name: Install dependencies (Debian/Ubuntu)
+      apt:
+        name:
+          - curl
+          - apt-transport-https
+          - gnupg
+        state: present
+        update_cache: yes
+      when: ansible_os_family == "Debian"
+
+    - name: Install dependencies (Rocky/RedHat)
+      dnf:
+        name:
+          - curl
+          - gnupg2
+        state: present
+      when: ansible_os_family == "RedHat"
+
+    - name: Download Wazuh agent package (Debian/Ubuntu)
+      get_url:
+        url: https://packages.wazuh.com/4.x/apt/pool/main/w/wazuh-agent/wazuh-agent_4.7.5-1_amd64.deb
+        dest: /tmp/wazuh-agent.deb
+      when: ansible_os_family == "Debian"
+
+    - name: Install Wazuh agent (Debian/Ubuntu)
+      command: >
+        WAZUH_MANAGER='{{ wazuh_manager_ip }}'
+        WAZUH_AGENT_GROUP='{{ wazuh_agent_group }}'
+        dpkg -i /tmp/wazuh-agent.deb
+      when: ansible_os_family == "Debian"
+
+    - name: Download Wazuh agent package (Rocky/RedHat)
+      get_url:
+        url: https://packages.wazuh.com/4.x/yum/wazuh-agent-4.7.5-1.x86_64.rpm
+        dest: /tmp/wazuh-agent.rpm
+      when: ansible_os_family == "RedHat"
+
+    - name: Install Wazuh agent (Rocky/RedHat)
+      command: >
+        WAZUH_MANAGER='{{ wazuh_manager_ip }}'
+        WAZUH_AGENT_GROUP='{{ wazuh_agent_group }}'
+        rpm -ihv /tmp/wazuh-agent.rpm
+      when: ansible_os_family == "RedHat"
+
+    - name: Enable and start Wazuh agent
+      systemd:
+        name: wazuh-agent
+        enabled: yes
+        state: started
