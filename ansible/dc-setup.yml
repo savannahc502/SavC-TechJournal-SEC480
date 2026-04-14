@@ -36,10 +36,21 @@
     - name: DNS forwarder
       ansible.windows.win_shell: Add-DnsServerForwarder -IPAddress 10.0.5.2
 
+    - name: wait for AD to finish
+      ansible.builtin.pause:
+        seconds: 60
+
+    - name: wait for WinRM 
+      ansible.windows.win_wait_for:
+        port: 5985
+        delay: 10
+        timeout: 300
+
     - name: copy OU script
       ansible.builtin.copy:
         src: /home/admin/SavC-TechJournal-SEC480/ansible/windows_server/files/winServer/ou.ps1.j2
         dest: C:\Users\Administrator\ou.ps1
 
     - name: create OU structure
-      ansible.windows.win_shell: C:\Users\Administrator\ou.ps1
+      ansible.windows.win_shell: |
+        powershell -ExecutionPolicy Bypass -File C:\Users\Administrator\ou.ps1
