@@ -1,4 +1,4 @@
-- name: Install and configure Wazuh Agent on Ubuntu/Xubuntu
+- name: install wazuh agent and setup
   hosts: wazuh_agents
   become: yes
 
@@ -8,7 +8,7 @@
     wazuh_agent_name: "{{ inventory_hostname }}"
 
   tasks:
-    - name: Install dependencies
+    - name: dependencies install
       apt:
         name:
           - curl
@@ -17,33 +17,33 @@
         state: present
         update_cache: yes
 
-    - name: Download Wazuh agent package
+    - name: download wazuh
       get_url:
         url: https://packages.wazuh.com/4.x/apt/pool/main/w/wazuh-agent/wazuh-agent_4.7.5-1_amd64.deb
         dest: /tmp/wazuh-agent.deb
 
-    - name: Install Wazuh agent
+    - name: install wazuh agent
       command: dpkg -i /tmp/wazuh-agent.deb
 
-    - name: Configure manager IP
+    - name: configure manager IP
       lineinfile:
         path: /var/ossec/etc/ossec.conf
         regexp: '<address>.*</address>'
         line: '<address>{{ wazuh_manager_ip }}</address>'
 
-    - name: Set agent name
+    - name: agent name file edit
       lineinfile:
         path: /var/ossec/etc/ossec.conf
         regexp: '<name>.*</name>'
         line: '<name>{{ wazuh_agent_name }}</name>'
 
-    - name: Set agent group
+    - name: agent group file edit
       lineinfile:
         path: /var/ossec/etc/ossec.conf
         regexp: '<group>.*</group>'
         line: '<group>{{ wazuh_agent_group }}</group>'
 
-    - name: Enable and start Wazuh agent
+    - name: enable and start wazuh agent
       systemd:
         name: wazuh-agent
         enabled: yes
