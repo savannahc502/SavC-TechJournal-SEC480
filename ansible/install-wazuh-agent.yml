@@ -1,4 +1,4 @@
-- name: install wazuh agent and setup
+- name: install and configure wazuh agent rocky
   hosts: wazuh_agents
   become: yes
 
@@ -8,42 +8,40 @@
     wazuh_agent_name: "{{ inventory_hostname }}"
 
   tasks:
-    - name: dependencies install
-      apt:
+    - name: dependencies
+      dnf:
         name:
           - curl
-          - apt-transport-https
-          - gnupg
+          - gnupg2
         state: present
-        update_cache: yes
 
-    - name: download wazuh
+    - name: wazuh agent url download
       get_url:
-        url: https://packages.wazuh.com/4.x/apt/pool/main/w/wazuh-agent/wazuh-agent_4.7.5-1_amd64.deb
-        dest: /tmp/wazuh-agent.deb
+        url: https://packages.wazuh.com/4.x/yum/wazuh-agent-4.7.5-1.x86_64.rpm
+        dest: /tmp/wazuh-agent.rpm
 
     - name: install wazuh agent
-      command: dpkg -i /tmp/wazuh-agent.deb
+      command: rpm -ihv /tmp/wazuh-agent.rpm
 
-    - name: configure manager IP
+    - name: manager IP
       lineinfile:
         path: /var/ossec/etc/ossec.conf
         regexp: '<address>.*</address>'
         line: '<address>{{ wazuh_manager_ip }}</address>'
 
-    - name: agent name file edit
+    - name: agent name
       lineinfile:
         path: /var/ossec/etc/ossec.conf
         regexp: '<name>.*</name>'
         line: '<name>{{ wazuh_agent_name }}</name>'
 
-    - name: agent group file edit
+    - name: agent group
       lineinfile:
         path: /var/ossec/etc/ossec.conf
         regexp: '<group>.*</group>'
         line: '<group>{{ wazuh_agent_group }}</group>'
 
-    - name: enable and start wazuh agent
+    - name: enable and start wazuh 
       systemd:
         name: wazuh-agent
         enabled: yes
