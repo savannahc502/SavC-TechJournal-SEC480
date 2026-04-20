@@ -23,4 +23,20 @@
         rpm -ihv /tmp/wazuh-agent-4.7.5-1.x86_64.rpm"
 
     - name: manager IP
-      lineinfile
+      lineinfile:
+        path: /var/ossec/etc/ossec.conf
+        regexp: '<address>.*</address>'
+        line: '<address>{{ wazuh_manager_ip }}</address>'
+
+    - name: pause before enabling service
+      pause:
+        seconds: 5
+
+    - name: reload systemd daemon
+      command: systemctl daemon-reload
+
+    - name: enable wazuh-agent
+      command: systemctl enable wazuh-agent
+
+    - name: start wazuh-agent
+      command: systemctl start wazuh-agent
