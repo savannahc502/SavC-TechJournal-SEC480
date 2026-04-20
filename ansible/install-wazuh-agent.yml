@@ -20,6 +20,8 @@
         url: https://packages.wazuh.com/4.x/yum/wazuh.repo
         dest: /etc/yum.repos.d/wazuh.repo
         mode: '0644'
+        headers:
+          User-Agent: "Mozilla/5.0"
 
     - name: install wazuh agent
       dnf:
