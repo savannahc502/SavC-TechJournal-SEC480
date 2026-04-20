@@ -17,11 +17,14 @@
 
     - name: wazuh agent url download
       get_url:
-        url: https://packages.wazuh.com/4.x/yum/wazuh-agent-4.7.5-1.x86_64.rpm
-        dest: /tmp/wazuh-agent.rpm
+        url: https://packages.wazuh.com/4.x/yum/wazuh.repo
+        dest: /etc/yum.repos.d/wazuh.repo
+        mode: '0644'
 
     - name: install wazuh agent
-      command: rpm -ihv /tmp/wazuh-agent.rpm
+      dnf:
+        name: wazuh-agent
+        state: present
 
     - name: manager IP
       lineinfile:
@@ -41,7 +44,10 @@
         regexp: '<group>.*</group>'
         line: '<group>{{ wazuh_agent_group }}</group>'
 
-    - name: enable and start wazuh 
+    - name: reload systemd daemon
+      command: systemctl daemon-reload
+
+    - name: enable and start wazuh
       systemd:
         name: wazuh-agent
         enabled: yes
