@@ -4,53 +4,23 @@
 
   vars:
     wazuh_manager_ip: "10.0.5.87"
-    wazuh_agent_group: "linux"
-    wazuh_agent_name: "{{ inventory_hostname }}"
 
   tasks:
     - name: dependencies
       dnf:
         name:
           - curl
-          - gnupg2
         state: present
 
-    - name: wazuh agent url download
-      get_url:
-        url: https://packages.wazuh.com/4.x/yum/wazuh.repo
-        dest: /etc/yum.repos.d/wazuh.repo
-        mode: '0644'
-        headers:
-          User-Agent: "Mozilla/5.0"
+    - name: download wazuh agent rpm with curl
+      command: >
+        curl -o /tmp/wazuh-agent-4.7.5-1.x86_64.rpm
+        https://packages.wazuh.com/4.x/yum/wazuh-agent-4.7.5-1.x86_64.rpm
 
-    - name: install wazuh agent
-      dnf:
-        name: wazuh-agent
-        state: present
+    - name: install wazuh agent with manager IP
+      command: >
+        bash -c "WAZUH_MANAGER='{{ wazuh_manager_ip }}'
+        rpm -ihv /tmp/wazuh-agent-4.7.5-1.x86_64.rpm"
 
     - name: manager IP
-      lineinfile:
-        path: /var/ossec/etc/ossec.conf
-        regexp: '<address>.*</address>'
-        line: '<address>{{ wazuh_manager_ip }}</address>'
-
-    - name: agent name
-      lineinfile:
-        path: /var/ossec/etc/ossec.conf
-        regexp: '<name>.*</name>'
-        line: '<name>{{ wazuh_agent_name }}</name>'
-
-    - name: agent group
-      lineinfile:
-        path: /var/ossec/etc/ossec.conf
-        regexp: '<group>.*</group>'
-        line: '<group>{{ wazuh_agent_group }}</group>'
-
-    - name: reload systemd daemon
-      command: systemctl daemon-reload
-
-    - name: enable and start wazuh
-      systemd:
-        name: wazuh-agent
-        enabled: yes
-        state: restarted
+      lineinfile
