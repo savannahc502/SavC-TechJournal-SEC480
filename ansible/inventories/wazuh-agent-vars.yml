@@ -6,9 +6,6 @@ testUser: "Faker_luser"
 # Directory for simulation artifacts
 testDirectory: "/tmp/wazuh_sim"
 
-# Log file for shadow access simulation
-shadowAttemptLog: "/tmp/wazuh_sim/shadow_attempt.log"
-
 # Malicious script pathing 
 malScriptPath: "/tmp/wazuh_sim/mal_sim.sh"
 
