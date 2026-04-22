@@ -19,7 +19,7 @@ nmapPorts: "22,80,443,3306,5432"
 nmapTarget: "127.0.0.1"
 
 # Fake syslog entry to display log tampering simulation
-fakeLogEntery: "Apr-22 localhost sudo: hehe Get Attacked"
+fakeLogEntry: "Apr-22 localhost sudo: hehe Get Attacked"
 
 # Targeted paths by FIM simulation
 fimTestFile: "/etc/wazuh_fim_test.conf"

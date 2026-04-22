@@ -7,11 +7,12 @@
   vars_files:
     - ../inventories/wazuh-agent-vars.yml 
 
-  # Setup
   tasks:
+  # Setup
     - name: Setup Create Simulation
       file:
         path: "{{ testDirectory }}"
+        state: directory
         mode: '0775'
   
   # File Integrity Monitor simulation
@@ -63,14 +64,14 @@
       copy:
         dest: "{{ malScriptPath }}"
         mode: '0775'
-        conent: |
+        content: |
           #!/bin/bash
           # simulated attacker script 
           echo "*Hacker Voice* I'm In"
           whoami
           hostname
-          usname -a
-          cat /etc/password
+          uname -a
+          cat /etc/passwd
           ls /home/
     
     - name: Malicious Script Execute Script
@@ -107,8 +108,8 @@
     - name: LOG write fake log 
       lineinfile:
         path: "{{ syslogPath }}"
-        line: "{{ fakeLogEntery }}"
-        insertafter: E0F
+        line: "{{ fakeLogEntry }}"
+        insertafter: EOF
       ignore_errors: yes
   
   # NMAP Port Scan Simulation
