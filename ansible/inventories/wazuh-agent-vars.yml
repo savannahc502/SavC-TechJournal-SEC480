@@ -22,7 +22,7 @@ fakeLogEntry: "Apr-22 localhost sudo: hehe Get Attacked"
 fimTestFile: "/etc/wazuh_fim_test.conf"
 
 # Authentication log path for tamper simulation
-authLogPath: "/var/log/auth.log"
+authLogPath: "/var/log/secure"
 
 # Syslog pathing for injection simulation
-syslogPath: "/var/log/syslog"
+syslogPath: "/var/log/messages"

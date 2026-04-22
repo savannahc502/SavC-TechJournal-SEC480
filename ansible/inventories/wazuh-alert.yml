@@ -1,11 +1,11 @@
 # Playbook that triggers Wazuh's agent capabilites! 
 
 - name: Wazuh SIEM Alert Demo Playbook
-  hosts: all
+  hosts: wazuh_agents
   become: yes
 
   vars_files:
-    - ../inventories/wazuh-agent-vars.yml 
+    - wazuh-agent-vars.yml 
 
   tasks:
   # Setup
@@ -90,7 +90,7 @@
     - name: Persistence Add test user to sudo
       user:
         name: "{{ testUser }}"
-        groups: sudo
+        groups: wheel
         append: yes
     
     - name: Persistence Delete test user 
@@ -116,10 +116,9 @@
   # Simulates interenet reconnaissance (scouting) and lateral movement 
 
     - name: PORT Install nmap 
-      apt:
+      dnf:
         name: nmap 
         state: present
-        update_cache: yes
       ignore_errors: yes
 
     - name: PORT run nmap scan against localhost 
